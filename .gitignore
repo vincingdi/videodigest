@@ -5,4 +5,7 @@ build/
 dist/
 .DS_Store
 MANIFEST
+*.mp4
+*.srt
+
 *#*
