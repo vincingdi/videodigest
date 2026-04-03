@@ -8,7 +8,7 @@ import subprocess
 import sys
 import math
 
-from moviepy.editor import VideoFileClip, TextClip, ImageClip, concatenate_videoclips
+from moviepy import VideoFileClip, TextClip, ImageClip, concatenate_videoclips
 
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -34,7 +34,7 @@ def create_summary(filename, regions):
     input_video = VideoFileClip(filename)
     last_end = 0
     for (start, end) in regions:
-        subclip = input_video.subclip(start, end)
+        subclip = input_video.subclipped(start, end)
         subclips.append(subclip)
         last_end = end
     return concatenate_videoclips(subclips)
@@ -54,7 +54,7 @@ def srt_to_doc(srt_file):
     return text
 
 def total_duration_of_regions(regions):
-    return sum(map(lambda (start, end): end-start, regions))
+    return sum(map(lambda region: region[1] - region[0], regions))
 
 def summarize(srt_file, summarizer, n_sentences, language):
     parser = PlaintextParser.from_string(srt_to_doc(srt_file), Tokenizer(language))
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.summarizer not in SUMMARIZERS.keys():
-        print 'Summarizer must be one of: ' + ', '.join(SUMMARIZERS.keys())
+        print('Summarizer must be one of: ' + ', '.join(SUMMARIZERS.keys()))
         sys.exit(1)
 
     regions = find_summary_regions(args.subtitles_file,
@@ -113,7 +113,7 @@ if __name__ == '__main__':
         base, ext = os.path.splitext(args.video_file)
         dst = "{0}_summarized.mp4".format(base)
 
-    summary.to_videofile(
+    summary.write_videofile(
         dst, 
         codec="libx264", 
         temp_audiofile="temp.m4a",
