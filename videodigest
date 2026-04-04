@@ -9,6 +9,7 @@ import sys
 import math
 
 from moviepy import VideoFileClip, TextClip, ImageClip, concatenate_videoclips
+import videodown
 
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -32,11 +33,9 @@ SUMMARIZERS = {
 def create_summary(filename, regions):
     subclips = []
     input_video = VideoFileClip(filename)
-    last_end = 0
     for (start, end) in regions:
         subclip = input_video.subclipped(start, end)
         subclips.append(subclip)
-        last_end = end
     return concatenate_videoclips(subclips)
 
 def srt_item_to_range(item):
