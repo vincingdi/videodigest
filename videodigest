@@ -88,12 +88,13 @@ def find_summary_regions(srt_filename, summarizer="lsa", duration=30, language="
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("videodigest: Automatic Video Summaries")
-    parser.add_argument('-i', '--video-file', help="Input video file", required=True)
-    parser.add_argument('-s', '--subtitles-file', help="Input subtitle file (srt)", required=True)
+    # parser.add_argument('-i', '--video-file', help="Input video file", required=False)
+    # parser.add_argument('-s', '--subtitles-file', help="Input subtitle file (srt)", required=False)
     parser.add_argument('-t', '--duration', type=int, help="Duration of summary", default=60)
     parser.add_argument('-L', '--language', help="Language of subtitles", default="english")
     parser.add_argument('-S', '--summarizer', help="Auto-summarization algorithm ("+' | '.join(SUMMARIZERS.keys())+")", default="lsa")
     parser.add_argument('-o', '--output', help="Output file")
+    parser.add_argument('-y', '--youtube-video', help="Link to youtube video", required=True)
 
     args = parser.parse_args()
 
@@ -101,11 +102,14 @@ if __name__ == '__main__':
         print('Summarizer must be one of: ' + ', '.join(SUMMARIZERS.keys()))
         sys.exit(1)
 
-    regions = find_summary_regions(args.subtitles_file,
+    videodown.download_video(args.youtube_video)
+
+    regions = find_summary_regions("english.srt",
                                    summarizer=args.summarizer,
                                    duration=args.duration,
                                    language=args.language)
-    summary = create_summary(args.video_file, regions)
+
+    summary = create_summary("video.mp4", regions)
 
     dst = args.output
     if not dst:
