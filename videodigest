@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     videodown.download_video(args.youtube_video)
 
-    regions = find_summary_regions("english.srt",
+    regions = find_summary_regions("video.en.srt",
                                    summarizer=args.summarizer,
                                    duration=args.duration,
                                    language=args.language)

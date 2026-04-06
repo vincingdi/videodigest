@@ -1,14 +1,6 @@
-
-from pytube import YouTube
+import subprocess
 
 def download_video(url):
-    yt =  YouTube(url)
-    stream = yt.streams.first()
-    stream.download(filename="video")
-    caption = yt.captions.get_by_language_code('en')
-    str = caption.generate_srt_captions()
-
-    with open("english.srt", "w") as f:
-        f.write(str)
+    subprocess.run(["yt-dlp", url, "-o", "video", "--write-subs", "--convert-subs", "srt", "--ffmpeg-location", r"C:\Users\Desktop-PC\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1-full_build\bin\ffmpeg.exe"])
 
     
