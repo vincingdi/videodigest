@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
     dst = args.output
     if not dst:
-        base, ext = os.path.splitext(args.video_file)
+        base, ext = os.path.splitext("video.mp4")
         dst = "{0}_summarized.mp4".format(base)
 
     summary.write_videofile(
