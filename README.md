@@ -39,10 +39,7 @@ usage: videodigest: Automatic Video Summaries [-h] -i VIDEO_FILE -s
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i VIDEO_FILE, --video-file VIDEO_FILE
-                        Input video file
-  -s SUBTITLES_FILE, --subtitles-file SUBTITLES_FILE
-                        Input subtitle file (srt)
+  
   -t DURATION, --duration DURATION
                         Duration of summary
   -L LANGUAGE, --language LANGUAGE
@@ -50,6 +47,7 @@ optional arguments:
   -S SUMMARIZER, --summarizer SUMMARIZER
                         Auto-summarization algorithm (text-rank | luhn |
                         edmundson | lex-rank | lsa)
+  -y URL,      
   -o OUTPUT, --output OUTPUT
                         Output file
 ```
